@@ -272,12 +272,8 @@ body, button {
 */
 
 #welcomeImageSeal {
-    border-radius: 50%;
-    border: 2px solid #cad7e1;
-    background: rgba(1, 2, 1, 0.5);
     height: 125px;
     width: 125px;
-    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
     margin-bottom: 5%;
     margin-top: 10%;
 }
@@ -485,12 +481,8 @@ body, button {
 
 /* Logo on login form. */
 #loginImageSeal {
-    border-radius: 50%;
-    border: 2px solid #cad7e1;
-    background: rgba(1, 2, 1, 0.5);
     height: 125px;
     width: 125px;
-    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
     margin-bottom: 20px;
 }
 
@@ -541,15 +533,15 @@ body, button {
     10%, 90% {
         transform: translate3d(-1px, 0, 0);
     }
-    
+
     20%, 80% {
         transform: translate3d(2px, 0, 0);
     }
-  
+
     30%, 50%, 70% {
         transform: translate3d(-4px, 0, 0);
     }
-  
+
     40%, 60% {
         transform: translate3d(4px, 0, 0);
     }
@@ -2664,30 +2656,29 @@ input:checked + .toggleSwitchSlider:before {
 * * */
 
 /* Logo image. */
-#image_seal {
-    height: 70px;
+#image_scologo {
+    height: 180px;
     width: auto;
     position: relative;
-    border: 2px solid white;
     box-sizing: border-box;
-    border-radius: 50%;
 }
 
 /* Logo container styles. */
-#image_seal_container {
+#image_scologo_container {
     position: relative;
     height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    margin-top: 50px;
+    width: 100px;
+    margin-top: -20px;
+    margin-left: -300px;
+
 }
 
 /* Logo container styles w/ update. */
-#image_seal_container[update]{
+#image_scologo_container[update]{
     cursor: pointer
 }
-#image_seal_container[update]:before,
-#image_seal_container[update]:after {
+#image_scologo_container[update]:before,
+#image_scologo_container[update]:after {
     cursor: pointer;
     position: absolute;
     content: '';
@@ -2700,7 +2691,7 @@ input:checked + .toggleSwitchSlider:before {
     animation: glow-grow 4s ease-out infinite;
     background: rgba(0, 0, 0, 0.15);
 }
-#image_seal_container[update]:before {
+#image_scologo_container[update]:before {
     animation-delay: 2s;
 }
 
@@ -2759,17 +2750,18 @@ input:checked + .toggleSwitchSlider:before {
 * Landing View (Bottom Styles) | Right Content
 * * */
 
-/*  Wrapper container for top, right content. */
-#rightContainer {
+/*  Wrapper container for top, left content. */
+#leftContainer {
     display: flex;
     flex-direction: column;
     position: relative;
-    top: 50px;
+    top: 25px;
+    left: -50px;
     align-items: flex-start;
     height: calc(100% - 50px);
 }
 
-/* Right hand user content container. */
+/* Left hand user content container. */
 #user_content {
     display: flex;
     align-items: center;
@@ -2829,7 +2821,7 @@ input:checked + .toggleSwitchSlider:before {
     letter-spacing: 1px;
     text-shadow: 0px 0px 20px black;
     position: absolute;
-    right: 95px;
+    left: 25px;
     text-align: right;
     -webkit-user-select: initial;
 }
@@ -2923,7 +2915,7 @@ input:checked + .toggleSwitchSlider:before {
     border-radius: 4px;
     position: absolute;
     z-index: 1;
-    right: 130%;
+    left: 130%;
     font-size: 12px;
     line-height: 20px;
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
@@ -2932,11 +2924,11 @@ input:checked + .toggleSwitchSlider:before {
     content: " ";
     position: absolute;
     top: 50%;
-    left: 100%;
+    right: 100%;
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent transparent rgba(0, 0, 0, 0.75);
+    border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
 }
 .mediaButton:hover #settingsTooltip,
 .mediaButton:focus #settingsTooltip,
@@ -3236,7 +3228,7 @@ input:checked + .toggleSwitchSlider:before {
     top: 25px;
     display: none;
 }
- 
+
 /* Left side of launch details container, displays percentage and a divider. */
 #launch_details_left {
     display: flex;

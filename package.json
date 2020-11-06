@@ -1,14 +1,10 @@
 {
-  "name": "helioslauncher",
+  "name": "arpglauncher",
   "version": "1.8.0",
-  "productName": "Helios Launcher",
+  "productName": "AncientRPG Launcher",
   "description": "Modded Minecraft Launcher",
-  "author": "Daniel Scalzi (https://github.com/dscalzi/)",
+  "author": "AncientRPG",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/dscalzi/HeliosLauncher",
-  "bugs": {
-    "url": "https://github.com/dscalzi/HeliosLauncher/issues"
-  },
   "private": true,
   "main": "index.js",
   "scripts": {

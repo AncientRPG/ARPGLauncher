@@ -27,7 +27,7 @@ const loggerLanding = LoggerUtil('%c[Landing]', 'color: #000668; font-weight: bo
 
 /**
  * Show/hide the loading area.
- * 
+ *
  * @param {boolean} loading True if the loading area should be shown, otherwise false.
  */
 function toggleLaunchArea(loading){
@@ -42,7 +42,7 @@ function toggleLaunchArea(loading){
 
 /**
  * Set the details text of the loading area.
- * 
+ *
  * @param {string} details The new text for the loading details.
  */
 function setLaunchDetails(details){
@@ -51,7 +51,7 @@ function setLaunchDetails(details){
 
 /**
  * Set the value of the loading progress bar and display that value.
- * 
+ *
  * @param {number} value The progress value.
  * @param {number} max The total size.
  * @param {number|string} percent Optional. The percentage to display on the progress label.
@@ -64,7 +64,7 @@ function setLaunchPercentage(value, max, percent = ((value/max)*100)){
 
 /**
  * Set the value of the OS progress bar and display that on the UI.
- * 
+ *
  * @param {number} value The progress value.
  * @param {number} max The total download size.
  * @param {number|string} percent Optional. The percentage to display on the progress label.
@@ -76,7 +76,7 @@ function setDownloadPercentage(value, max, percent = ((value/max)*100)){
 
 /**
  * Enable or disable the launch button.
- * 
+ *
  * @param {boolean} val True to enable, false to disable.
  */
 function setLaunchEnabled(val){
@@ -130,7 +130,7 @@ function updateSelectedAccount(authUser){
             username = authUser.displayName
         }
         if(authUser.uuid != null){
-            document.getElementById('avatarContainer').style.backgroundImage = `url('https://crafatar.com/renders/body/${authUser.uuid}')`
+            document.getElementById('avatarContainer').style.backgroundImage = `url('https://crafatar.com/avatars/${authUser.uuid}')`
         }
     }
     user_text.innerHTML = username
@@ -215,7 +215,7 @@ const refreshMojangStatuses = async function(){
         loggerLanding.warn('Unable to refresh Mojang service status.')
         loggerLanding.debug(err)
     }
-    
+
     document.getElementById('mojangStatusEssentialContainer').innerHTML = tooltipEssentialHTML
     document.getElementById('mojangStatusNonEssentialContainer').innerHTML = tooltipNonEssentialHTML
     document.getElementById('mojang_status_icon').style.color = Mojang.statusToHex(status)
@@ -250,7 +250,7 @@ const refreshServerStatus = async function(fade = false){
         document.getElementById('landingPlayerLabel').innerHTML = pLabel
         document.getElementById('player_count').innerHTML = pVal
     }
-    
+
 }
 
 refreshMojangStatuses()
@@ -262,7 +262,7 @@ let serverStatusListener = setInterval(() => refreshServerStatus(true), 300000)
 
 /**
  * Shows an error overlay, toggles off the launch area.
- * 
+ *
  * @param {string} title The overlay title.
  * @param {string} desc The overlay description.
  */
@@ -286,9 +286,9 @@ let extractListener
 
 /**
  * Asynchronously scan the system for valid Java installations.
- * 
+ *
  * @param {string} mcVersion The Minecraft version we are scanning for.
- * @param {boolean} launchAfter Whether we should begin to launch after scanning. 
+ * @param {boolean} launchAfter Whether we should begin to launch after scanning.
  */
 function asyncSystemScan(mcVersion, launchAfter = true){
 
@@ -319,7 +319,7 @@ function asyncSystemScan(mcVersion, launchAfter = true){
     sysAEx.stdio[2].on('data', (data) => {
         loggerSysAEx.log(data)
     })
-    
+
     sysAEx.on('message', (m) => {
 
         if(m.context === 'validateJava'){
@@ -611,7 +611,7 @@ function dlAsync(login = true){
             switch(m.data){
                 case 'download':
                     loggerLaunchSuite.error('Error while downloading:', m.error)
-                    
+
                     if(m.error.code === 'ENOENT'){
                         showLaunchFailure(
                             'Download Error',
@@ -787,8 +787,8 @@ let newsGlideCount = 0
 
 /**
  * Show the news UI via a slide animation.
- * 
- * @param {boolean} up True to slide up, otherwise false. 
+ *
+ * @param {boolean} up True to slide up, otherwise false.
  */
 function slide_(up){
     const lCUpper = document.querySelector('#landingContainer > #upper')
@@ -862,7 +862,7 @@ let newsLoadingListener = null
 
 /**
  * Set the news loading animation.
- * 
+ *
  * @param {boolean} val True to set loading animation, otherwise false.
  */
 function setNewsLoading(val){
@@ -904,7 +904,7 @@ newsArticleContentScrollable.onscroll = (e) => {
 
 /**
  * Reload the news without restarting.
- * 
+ *
  * @returns {Promise.<void>} A promise which resolves when the news
  * content has finished loading and transitioning.
  */
@@ -932,7 +932,7 @@ function showNewsAlert(){
 /**
  * Initialize News UI. This will load the news and prepare
  * the UI accordingly.
- * 
+ *
  * @returns {Promise.<void>} A promise which resolves when the news
  * content has finished loading and transitioning.
  */
@@ -1018,7 +1018,7 @@ function initNews(){
                 const switchHandler = (forward) => {
                     let cArt = parseInt(newsContent.getAttribute('article'))
                     let nxtArt = forward ? (cArt >= newsArr.length-1 ? 0 : cArt + 1) : (cArt <= 0 ? newsArr.length-1 : cArt - 1)
-            
+
                     displayArticle(newsArr[nxtArt], nxtArt+1)
                 }
 
@@ -1034,7 +1034,7 @@ function initNews(){
             }
 
         })
-        
+
     })
 }
 
@@ -1064,7 +1064,7 @@ document.addEventListener('keydown', (e) => {
 
 /**
  * Display a news article on the UI.
- * 
+ *
  * @param {Object} articleObject The article meta object.
  * @param {number} index The article index.
  */
