@@ -514,8 +514,7 @@ body, button {
 /* Span which displays errors related to login field content. */
 .loginErrorSpan {
     font-family: 'Avenir Medium';
-    font-weight: bold;
-    font-size: 8px;
+    font-size: 10px;
     color: #ff1b0c;
     width: 100%;
     text-align: right;
@@ -2887,6 +2886,74 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     align-items: center;
     outline: none;
+}
+
+/* Website tooltip styles. */
+#websiteTooltip {
+    visibility: hidden;
+    opacity: 0;
+    width: 100px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1;
+    left: 130%;
+    font-size: 12px;
+    line-height: 20px;
+    transition: visibility 0s linear 0.25s, opacity 0.25s ease;
+}
+#websiteTooltip::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
+}
+.mediaButton:hover #websiteTooltip,
+.mediaButton:focus #websiteTooltip,
+.mediaButton:active #websiteTooltip {
+    visibility: visible;
+    opacity: 1;
+    transition-delay:0s;
+}
+
+/* Discord tooltip styles. */
+#discordTooltip {
+    visibility: hidden;
+    opacity: 0;
+    width: 100px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1;
+    left: 130%;
+    font-size: 12px;
+    line-height: 20px;
+    transition: visibility 0s linear 0.25s, opacity 0.25s ease;
+}
+#discordTooltip::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
+}
+.mediaButton:hover #discordTooltip,
+.mediaButton:focus #discordTooltip,
+.mediaButton:active #discordTooltip {
+    visibility: visible;
+    opacity: 1;
+    transition-delay:0s;
 }
 
 #settingsMediaContainer {
