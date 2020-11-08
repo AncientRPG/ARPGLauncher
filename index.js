@@ -1,5 +1,5 @@
 // Requirements
-const { app, BrowserWindow, ipcMain, Menu } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, Tray } = require('electron')
 const autoUpdater                   = require('electron-updater').autoUpdater
 const ejse                          = require('ejs-electron')
 const fs                            = require('fs')
@@ -227,4 +227,24 @@ app.on('activate', () => {
     if (win === null) {
         createWindow()
     }
+})
+
+let tray = null
+app.whenReady().then(() => {
+  tray = new Tray('app/assets/images/SealCircle.ico')
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Show/Hide Window', click() { if (win.isVisible()) { win.hide() } else { win.show() } } },
+    { label: 'Exit Launcher', click() { win.close(); } }
+  ])
+  tray.setToolTip('ARPG Launcher')
+  tray.setContextMenu(contextMenu)
+
+  tray.setIgnoreDoubleClickEvents(true)
+  tray.on('click', function(e){
+    if (win.isVisible()) {
+      win.hide()
+    } else {
+      win.show()
+    }
+  });
 })

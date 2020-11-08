@@ -723,10 +723,9 @@ function dlAsync(login = true){
                         })
                     }
 
-                    // Close launcher 15 seconds after launching game
-                    //setTimeout(function() {
-                    //  remote.getCurrentWindow().close();
-                    //}, 15000);
+
+                    // Hide window while game is running
+                    remote.getCurrentWindow().hide();
 
                 } catch(err) {
 
