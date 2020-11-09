@@ -1,3 +1,2 @@
-owner: Matwix
-repo: ARPGLauncher
-provider: github
+provider: generic
+url: https://arpg.vtc.gg

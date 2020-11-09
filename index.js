@@ -231,7 +231,7 @@ app.on('activate', () => {
 
 let tray = null
 app.whenReady().then(() => {
-  tray = new Tray('app/assets/images/SealCircle.ico')
+  tray = new Tray(getPlatformIcon('SealCircle'))
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Show/Hide Window', click() { if (win.isVisible()) { win.hide() } else { win.show() } } },
     { label: 'Exit Launcher', click() { win.close(); } }

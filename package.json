@@ -1,6 +1,6 @@
 {
   "name": "arpglauncher",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "productName": "AncientRPG Launcher",
   "description": "Modded Minecraft Launcher",
   "author": "AncientRPG",
@@ -38,11 +38,19 @@
   "devDependencies": {
     "cross-env": "^7.0.2",
     "electron": "^10.1.2",
-    "electron-builder": "^22.8.0",
+    "electron-builder": "^22.9.1",
     "eslint": "^7.9.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dscalzi/HeliosLauncher.git"
+  "build": {
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://arpg.vtc.gg"
+      }
+    ],
+    "appId": "gg.vtc.arpg",
+    "nsis": {
+      "perMachine": true
+    }
   }
 }
