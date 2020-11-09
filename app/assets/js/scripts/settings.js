@@ -1300,9 +1300,7 @@ function populateSettingsUpdateInformation(data){
                 shell.openExternal(data.darwindownload)
             })
         } else {
-          settingsUpdateButtonStatus('Download from GitHub<span style="font-size: 10px;color: gray;text-shadow: none !important;">Close the launcher and run the exe to update.</span>', false, () => {
-              shell.openExternal(data.windownload)
-          })
+            settingsUpdateButtonStatus('Downloading...', true)
         }
 
         playButton.disabled = true

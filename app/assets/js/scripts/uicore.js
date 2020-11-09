@@ -51,9 +51,7 @@ if(!isDev){
                     info.darwindownload = `https://github.com/Matwix/ARPGLauncher/releases/download/v${info.version}/AncientRPG.Launcher-setup-${info.version}.dmg`
                     showUpdateUI(info)
                 }
-
-                info.windownload = `https://github.com/Matwix/ARPGLauncher/releases/download/v${info.version}/AncientRPG.Launcher-setup-${info.version}.exe`
-
+                
                 populateSettingsUpdateInformation(info)
                 break
             case 'update-downloaded':
