@@ -17,6 +17,7 @@ const checkmarkContainer    = document.getElementById('checkmarkContainer')
 const loginRememberOption   = document.getElementById('loginRememberOption')
 const loginButton           = document.getElementById('loginButton')
 const loginForm             = document.getElementById('loginForm')
+const loginMSButton         = document.getElementById('loginMSButton')
 
 // Control variables.
 let lu = false, lp = false
@@ -26,7 +27,7 @@ const loggerLogin = LoggerUtil('%c[Login]', 'color: #000668; font-weight: bold')
 
 /**
  * Show a login error.
- * 
+ *
  * @param {HTMLElement} element The element on which to display the error.
  * @param {string} value The error text.
  */
@@ -37,7 +38,7 @@ function showError(element, value){
 
 /**
  * Shake a login error to add emphasis.
- * 
+ *
  * @param {HTMLElement} element The element to shake.
  */
 function shakeError(element){
@@ -50,7 +51,7 @@ function shakeError(element){
 
 /**
  * Validate that an email field is neither empty nor invalid.
- * 
+ *
  * @param {string} value The email value.
  */
 function validateEmail(value){
@@ -75,7 +76,7 @@ function validateEmail(value){
 
 /**
  * Validate that the password field is not empty.
- * 
+ *
  * @param {string} value The password value.
  */
 function validatePassword(value){
@@ -112,7 +113,7 @@ loginPassword.addEventListener('input', (e) => {
 
 /**
  * Enable or disable the login button.
- * 
+ *
  * @param {boolean} v True to enable, false to disable.
  */
 function loginDisabled(v){
@@ -123,7 +124,7 @@ function loginDisabled(v){
 
 /**
  * Enable or disable loading elements.
- * 
+ *
  * @param {boolean} v True to enable, false to disable.
  */
 function loginLoading(v){
@@ -138,7 +139,7 @@ function loginLoading(v){
 
 /**
  * Enable or disable login form.
- * 
+ *
  * @param {boolean} v True to enable, false to disable.
  */
 function formDisabled(v){
@@ -157,7 +158,7 @@ function formDisabled(v){
 /**
  * Parses an error and returns a user-friendly title and description
  * for our error overlay.
- * 
+ *
  * @param {Error | {cause: string, error: string, errorMessage: string}} err A Node.js
  * error or Mojang error response.
  */
@@ -298,3 +299,70 @@ loginButton.addEventListener('click', () => {
     })
 
 })
+
+loginMSButton.addEventListener('click', (event) => {
+    ipcRenderer.send('openMSALoginWindow', 'open')
+})
+
+ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
+    if (args[0] === 'error') {
+        setOverlayContent('LOGIN FAIL', 'Theres a window already open!', 'OK')
+        setOverlayHandler(() => {
+            toggleOverlay(false)
+        })
+        toggleOverlay(true)
+        return
+    }
+
+    const queryMap = args[0]
+    if(queryMap.has('error')) {
+        let error = queryMap.get('error')
+        let errorDesc = queryMap.get('error_description')
+        setOverlayContent(error, errorDesc, 'OK')
+        setOverlayHandler(() => {
+            toggleOverlay(false)
+        })
+        toggleOverlay(true)
+        return
+    }
+
+    // Disable form.
+    formDisabled(true)
+
+    // Show loading stuff.
+    loginLoading(true)
+
+    const authCode = queryMap.get('code')
+    AuthManager.addMSAccount(authCode).then(account => {
+        updateSelectedAccount(account)
+        loginButton.innerHTML = loginButton.innerHTML.replace(Lang.queryJS('login.loggingIn'), Lang.queryJS('login.success'))
+        $('.circle-loader').toggleClass('load-complete')
+        $('.checkmark').toggle()
+        setTimeout(() => {
+            switchView(VIEWS.login, loginViewOnSuccess, 500, 500, () => {
+                // Temporary workaround
+                if(loginViewOnSuccess === VIEWS.settings){
+                    prepareSettings()
+                }
+                loginViewOnSuccess = VIEWS.landing // Reset this for good measure.
+                loginCancelEnabled(false) // Reset this for good measure.
+                loginViewCancelHandler = null // Reset this for good measure.
+                loginUsername.value = ''
+                loginPassword.value = ''
+                $('.circle-loader').toggleClass('load-complete')
+                $('.checkmark').toggle()
+                loginLoading(false)
+                loginButton.innerHTML = loginButton.innerHTML.replace(Lang.queryJS('login.success'), Lang.queryJS('login.login'))
+                formDisabled(false)
+            })
+        }, 1000)
+    }).catch(error => {
+        loginLoading(false)
+        setOverlayContent('ERROR!', 'Report Plz!', Lang.queryJS('login.tryAgain'))
+        setOverlayHandler(() => {
+            formDisabled(false)
+            toggleOverlay(false)
+        })
+        toggleOverlay(true)
+        loggerLogin.error(error)
+    })

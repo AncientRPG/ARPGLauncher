@@ -103,7 +103,8 @@ const DEFAULT_CONFIG = {
     selectedServer: null, // Resolved
     selectedAccount: null,
     authenticationDatabase: {},
-    modConfigurations: []
+    modConfigurations: [],
+    microsoftAuth: {}
 }
 
 let config = null
@@ -327,6 +328,7 @@ exports.getAuthAccount = function(uuid){
  */
 exports.updateAuthAccount = function(uuid, accessToken){
     config.authenticationDatabase[uuid].accessToken = accessToken
+    config.authenticationDatabase[uuid].expiresAt = expiresAt
     return config.authenticationDatabase[uuid]
 }
 
@@ -340,13 +342,15 @@ exports.updateAuthAccount = function(uuid, accessToken){
  *
  * @returns {Object} The authenticated account object created by this action.
  */
-exports.addAuthAccount = function(uuid, accessToken, username, displayName){
+exports.addAuthAccount = function(uuid, accessToken, username, displayName, expiresAt = null, type = 'mojang'){
     config.selectedAccount = uuid
     config.authenticationDatabase[uuid] = {
         accessToken,
         username: username.trim(),
         uuid: uuid.trim(),
-        displayName: displayName.trim()
+        displayName: displayName.trim(),
+        expiresAt: expiresAt,
+        type: type
     }
     return config.authenticationDatabase[uuid]
 }
@@ -686,3 +690,18 @@ exports.getAllowPrerelease = function(def = false){
 exports.setAllowPrerelease = function(allowPrerelease){
     config.settings.launcher.allowPrerelease = allowPrerelease
 }
+
+exports.setMicrosoftAuth = microsoftAuth => {
+    config.microsoftAuth = microsoftAuth
+}
+
+exports.getMicrosoftAuth = () => {
+    return config.microsoftAuth
+}
+
+exports.updateMicrosoftAuth = (accessToken, expiresAt) => {
+    config.microsoftAuth.access_token = accessToken
+    config.microsoftAuth.expires_at = expiresAt
+
+    return config.microsoftAuth
+}  
