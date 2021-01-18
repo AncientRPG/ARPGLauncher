@@ -366,3 +366,4 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
         toggleOverlay(true)
         loggerLogin.error(error)
     })
+})

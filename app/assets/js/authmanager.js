@@ -18,8 +18,8 @@ const loggerSuccess = LoggerUtil('%c[AuthManager]', 'color: #209b07; font-weight
 
 // Validation
 
-async function validateSelectedMojang() {
-    const current = ConfigManager.getSelectedAccount()
+async function validateSelectedMojang(selectedAccount) {
+    const current = selectedAccount
     const isValid = await Mojang.validate(current.accessToken, ConfigManager.getClientToken())
     if(!isValid){
         try {
@@ -42,9 +42,9 @@ async function validateSelectedMojang() {
     }
 }
 
-async function validateSelectedMicrosoft() {
+async function validateSelectedMicrosoft(selectedAccount) {
     try {
-        const current = ConfigManager.getSelectedAccount()
+        const current = selectedAccount
         const now = new Date().getTime()
         const MCExpiresAt = Date.parse(current.expiresAt)
         const MCExpired = now > MCExpiresAt
@@ -131,21 +131,14 @@ exports.removeAccount = async function(uuid){
  * otherwise false.
  */
 exports.validateSelected = async function(){
-    const current = ConfigManager.getSelectedAccount()
-    const isValid = await Mojang.validate(current.accessToken, ConfigManager.getClientToken())
-    if(!isValid){
-      try{
-          if (ConfigManager.getSelectedAccount() === 'microsoft') {
-              const validate = await validateSelectedMicrosoft()
-              return validate
-          } else {
-              const validate = await validateSelectedMojang()
-              return validate
-          }
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
+  const selectedAccount = ConfigManager.getSelectedAccount()
+  if (selectedAccount.type === 'microsoft') {
+      const validate = await validateSelectedMicrosoft(selectedAccount)
+      return validate
+  } else {
+      const validate = await validateSelectedMojang(selectedAccount)
+      return validate
+  }
 }
 
 exports.addMSAccount = async authCode => {
@@ -156,7 +149,6 @@ exports.addMSAccount = async authCode => {
         const MCProfile = await Microsoft.getMCProfile(MCAccessToken.access_token)
         const ret = ConfigManager.addAuthAccount(MCProfile.id, MCAccessToken.access_token, MCProfile.name, MCProfile.name, MCAccessToken.expires_at, 'microsoft')
         ConfigManager.save()
-
         return ret
     } catch(error) {
         return Promise.reject(error)

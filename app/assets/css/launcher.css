@@ -857,7 +857,8 @@ body, button {
     font-family: 'Avenir Medium';
     font-size: 12px;
     font-weight: bold;
-    margin-bottom: 3px;
+    margin-bottom: 253px;
+    margin-top: -250px;
     color: rgba(255, 255, 255, 0.75);
 }
 
